@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: node-deployment
+  #namespace: node-api
+spec:
+  selector:
+    matchLabels:
+      app: node-api
+  replicas: 1 # tells deployment to run 2 pods matching the template
+  template:
+    metadata:
+      labels:
+        app: node-api
+    spec:
+      containers:
+      - name: node-api
+        image: ian750/node-api:node-yellow
+        ports:
+        - containerPort: 3000

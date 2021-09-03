@@ -1,0 +1,25 @@
+#打包nodejs api image
+docker build -t moontea/node-api:1.0.0 .
+#run container
+docker run --name node-api -d -p 3000:3000 moontea/node-api
+#apply deployment
+kubectl apply -f node-deployment.yaml
+#apply svc
+kubectl apply -f node-service.yaml
+
+#apply deployment
+kubectl apply -f node-deployment-canary.yaml
+#apply svc
+kubectl apply -f node-service-canary.yaml
+
+#更新deployment
+kubectl replace -f node-deployment-rollingUpdate-new.yaml
+
+#查詢pod狀態
+kubectl get pod -l app=node-api
+
+#使用1.0.1的image進行更新
+kubectl set image deployment node-deployment node-api=moontea/node-api:1.0.1 && kubectl rollout pause deployment node-deployment
+
+#完成1.0.1的更新
+kubectl rollout resume deploy node-deployment

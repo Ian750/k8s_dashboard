@@ -1,0 +1,8 @@
+#打包nginx image
+docker build -t moontea/nginx:1.0.1 .
+#run container
+docker run --name nginx -d -p 8080:80 moontea/nginx
+#apply deployment
+kubectl apply -f nginx-deployment.yaml
+#apply svc
+kubectl apply -f nginx-service.yaml

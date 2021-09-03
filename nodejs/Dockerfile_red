@@ -1,0 +1,8 @@
+FROM node:8.9-alpine
+RUN mkdir -p /app
+WORKDIR /app
+COPY index.js /app
+RUN npm install express
+RUN npm install cors
+EXPOSE 3000
+CMD [ "node", "index_red.js" ]
